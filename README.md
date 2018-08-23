@@ -111,9 +111,9 @@ You should be able to see the number of pending messages (jobs) at http://<minku
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/messages" | jq .
 ```
 
-##  scale app workers
+##  scale the application 
 
-You can scale the application in proportion to the number of messages in the queue with the Horizontal Pod Autoscaler. You can deploy the HPA with:
+You can scale the application (backend workers) in proportion to the number of messages in the queue with the Horizontal Pod Autoscaler. You can deploy the HPA with:
 
 ```bash
 kubectl create -f kube/hpa.yaml
