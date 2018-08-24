@@ -15,6 +15,11 @@ minikube start \
   --extra-config=controller-manager.horizontal-pod-autoscaler-sync-period=10s
 ```
 
+ Run this command to configure your shell:
+```bash
+cd ..
+eval $(minikube docker-env)
+```
 > If you're using a pre-existing minikube instance, you can resize the VM by destroying it an recreating it. Just adding the `--memory 4096` won't have any effect.
 
 You should install `jq` — a lightweight and flexible command-line JSON processor.
@@ -24,13 +29,6 @@ You can find more [info about `jq` on the official website](https://github.com/s
 
 
 ## create application image
-
- Run this command to configure your shell:
-```bash
-cd ..
-eval $(minikube docker-env)
-```
-
 make images and package the application as a container with:
 ```bash
 docker build -t spring-boot-hpa .
@@ -38,8 +36,8 @@ docker build -t spring-boot-hpa .
 
 ## Deploying the application
 choose 1 of the 2 options:
- - 1. docker-compose up -d
- - 2. kubernetes - (k8s) 
+  1. docker-compose up -d
+  2. kubernetes - (k8s) 
       Deploy the application in Kubernetes with:
 to convert docker-compose.yml to kubernetes, u can use "kompose convert"
 ```bash
@@ -155,6 +153,12 @@ make certs
 
 You should redeploy the Prometheus adapter.
 
+when u r done with app. stop the cluster: using 
+```sh
+minikube stop 
+or 
+kops delete cluster --name=useast1.k8s.appychip.vpc --yes
+```
 
 ## Issues
 
