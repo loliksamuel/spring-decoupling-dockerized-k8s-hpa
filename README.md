@@ -45,7 +45,7 @@ docker build -t spring-boot-hpa .
 
 ## Deploying the application
 choose 1 of the 3 options:
-  1. docker run -d ...... -p 80:80
+  1. docker run spring-boot-hpa  -d -p 80:80
   2. docker-compose up -d
   3. kubernetes - (k8s) 
       Deploy the application in Kubernetes with:
