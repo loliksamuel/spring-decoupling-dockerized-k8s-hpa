@@ -1,5 +1,5 @@
 # Autoscaling Spring Boot with the Horizontal Pod Autoscaler and custom metrics on Kubernetes
-# see https://medium.freecodecamp.org/how-to-scale-microservices-with-message-queues-spring-boot-and-kubernetes-f691b7ba3acf
+ see https://medium.freecodecamp.org/how-to-scale-microservices-with-message-queues-spring-boot-and-kubernetes-f691b7ba3acf
 
 ## prepare the cluster
 
@@ -20,6 +20,15 @@ minikube start \
 cd ..
 eval $(minikube docker-env)
 ```
+
+ validate the cluster exists   : 
+```sh
+kubectl config current-context 
+or 
+kubectl cluster-info
+or 
+kubectl get nodes
+```
 > If you're using a pre-existing minikube instance, you can resize the VM by destroying it an recreating it. Just adding the `--memory 4096` won't have any effect.
 
 You should install `jq` — a lightweight and flexible command-line JSON processor.
@@ -39,7 +48,7 @@ choose 1 of the 2 options:
   1. docker-compose up -d
   2. kubernetes - (k8s) 
       Deploy the application in Kubernetes with:
-to convert docker-compose.yml to kubernetes, u can use "kompose convert"
+(to convert docker-compose.yml to kubernetes, u can use "kompose convert")
 ```bash
 kubectl create -f kube/all.yaml
 ```
@@ -97,10 +106,10 @@ minikube dashboard
 ```
 
 ##  play with the application
-You can visit the kubernetes dashboard at http://<minkube ip>:30000
-You can visit the application backend  at http://<minkube ip>:31000
-You can visit the application frontend at http://<minkube ip>:32000
-You should be able to see the number of pending messages (jobs) at http://<minkube ip>:32000/metrics and from the custom metrics endpoint:
+1. You can visit the kubernetes dashboard at http://<minkube ip>:30000
+2. You can visit the application backend  at http://<minkube ip>:31000
+3. You can visit the application frontend at http://<minkube ip>:32000
+4. You should be able to see the number of pending messages (jobs) at http://<minkube ip>:32000/metrics and from the custom metrics endpoint:
 
 ```bash
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/messages" | jq .
