@@ -1,7 +1,7 @@
 # Autoscaling Spring Boot with the Horizontal Pod Autoscaler and custom metrics on Kubernetes
 # see https://medium.freecodecamp.org/how-to-scale-microservices-with-message-queues-spring-boot-and-kubernetes-f691b7ba3acf
 
-## Prerequisites
+## prepare the cluster
 
 You should have minikube installed.
 
@@ -21,21 +21,38 @@ You should install `jq` — a lightweight and flexible command-line JSON process
 
 You can find more [info about `jq` on the official website](https://github.com/stedolan/jq).
 
-## Installing Custom Metrics Api
 
-Make sure you are in the `monitoring` folder:
 
+## create application image
+
+ Run this command to configure your shell:
 ```bash
-cd monitoring
+cd ..
+eval $(minikube docker-env)
 ```
 
+make images and package the application as a container with:
+```bash
+docker build -t spring-boot-hpa .
+```
+
+## Deploying the application
+choose 1 of the 2 options:
+ - 1. docker-compose up -d
+ - 2. kubernetes - (k8s) 
+      Deploy the application in Kubernetes with:
+to convert docker-compose.yml to kubernetes, u can use "kompose convert"
+```bash
+kubectl create -f kube/all.yaml
+```
 Deploy the Metrics Server in the `kube-system` namespace:
 
 ```bash
+cd monitoring
 kubectl create -f ./metrics-server
 ```
 
-After one minute the metric-server starts reporting CPU and memory usage for nodes and pods.
+After 1 minute the metric-server starts reporting CPU and memory usage for nodes and pods.
 
 View nodes metrics:
 
@@ -77,31 +94,11 @@ Get the FS usage for all the pods in the `monitoring` namespace:
 
 ```bash
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/monitoring/pods/*/fs_usage_bytes" | jq .
-```
-
-## Package the application
-
- Run this command to configure your shell:
-```bash
-cd ..
-eval $(minikube docker-env)
-```
-
-make images and package the application as a container with:
-```bash
-docker build -t spring-boot-hpa .
-```
-
-## Deploying the application
-
-Deploy the application in Kubernetes with:
-
-```bash
-kubectl create -f kube/all.yaml
+ 
 minikube dashboard
 ```
 
-## play with the application
+##  play with the application
 You can visit the kubernetes dashboard at http://<minkube ip>:30000
 You can visit the application backend  at http://<minkube ip>:31000
 You can visit the application frontend at http://<minkube ip>:32000
@@ -112,7 +109,6 @@ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*
 ```
 
 ##  scale the application 
-
 You can scale the application (backend workers) in proportion to the number of messages in the queue with the Horizontal Pod Autoscaler. You can deploy the HPA with:
 
 ```bash
