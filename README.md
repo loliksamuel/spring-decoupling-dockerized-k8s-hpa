@@ -51,6 +51,7 @@ choose 1 of the 3 options:
       Deploy the application in Kubernetes with:
 (to convert docker-compose.yml to kubernetes, u can use "kompose convert")
 ```bash
+kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
 kubectl create -f kube/all.yaml
 ```
 Deploy the Metrics Server in the `kube-system` namespace:

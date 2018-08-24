@@ -19,6 +19,8 @@ public class QueueService implements MessageListener {
     @Autowired
     private JmsTemplate jmsTemplate;
 
+    private final long PROCESS_TIME = 5000;//the process time is simulated by waiting for five seconds with a Thread.sleep(5000).
+
     private int counter = 0;
 
     public int completedJobs() {
@@ -51,7 +53,7 @@ public class QueueService implements MessageListener {
             ActiveMQTextMessage textMessage = (ActiveMQTextMessage) message;
             try {
                 LOGGER.info("Processing task " + textMessage.getText());
-                Thread.sleep(5000);
+                Thread.sleep(PROCESS_TIME);
                 LOGGER.info("Completed task " + textMessage.getText());
             } catch (InterruptedException e) {
                 e.printStackTrace();
