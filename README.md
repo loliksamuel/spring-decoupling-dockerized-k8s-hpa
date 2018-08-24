@@ -97,7 +97,7 @@ docker build -t spring-boot-hpa .
 Deploy the application in Kubernetes with:
 
 ```bash
-kubectl create -f kube/deployment.yaml
+kubectl create -f kube/all.yaml
 minikube dashboard
 ```
 
