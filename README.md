@@ -44,9 +44,10 @@ docker build -t spring-boot-hpa .
 ```
 
 ## Deploying the application
-choose 1 of the 2 options:
-  1. docker-compose up -d
-  2. kubernetes - (k8s) 
+choose 1 of the 3 options:
+  1. docker run -d ...... -p 80:80
+  2. docker-compose up -d
+  3. kubernetes - (k8s) 
       Deploy the application in Kubernetes with:
 (to convert docker-compose.yml to kubernetes, u can use "kompose convert")
 ```bash
@@ -106,10 +107,10 @@ minikube dashboard
 ```
 
 ##  play with the application
-1. You can visit the kubernetes dashboard at http://<minkube ip>:30000
-2. You can visit the application backend  at http://<minkube ip>:31000
-3. You can visit the application frontend at http://<minkube ip>:32000
-4. You should be able to see the number of pending messages (jobs) at http://<minkube ip>:32000/metrics and from the custom metrics endpoint:
+1. You can visit the kubernetes dashboard at http://minkube_ip:30000
+2. You can visit the application backend  at http://minkube_ip:31000
+3. You can visit the application frontend at http://minkube_ip:32000
+4. You should be able to see the number of pending messages (jobs) at http://minkube_ip:32000/metrics and from the custom metrics endpoint:
 
 ```bash
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/messages" | jq .
