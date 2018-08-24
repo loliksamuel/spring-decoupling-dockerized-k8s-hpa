@@ -158,3 +158,9 @@ make certs
 ```
 
 You should redeploy the Prometheus adapter.
+
+
+## Issues
+
+- bug in monitoring
+- bug in hpa 
