@@ -49,7 +49,7 @@ choose 1 of the 3 options:
   2. docker-compose up -d
   3. kubernetes - (k8s) 
   ```bash
-  cd monitoring  
+  cd monitoring 
   kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
   kubectl create -f namespaces.yaml,metrics-server,prometheus,custom-metrics-api
   cd ..
@@ -109,7 +109,7 @@ minikube dashboard
 ```
 
 ##  play with the application
-1. You can visit the kubernetes dashboard at http://minkube_ip:30000
+1. http://minkube_ip:30000   : kubernetes dashboard
 2. You can visit the application backend  at http://minkube_ip:31000
 3. You can visit the application frontend at http://minkube_ip:32000
 4. You should be able to see the number of pending messages (jobs) at http://minkube_ip:32000/metrics and from the custom metrics endpoint:
