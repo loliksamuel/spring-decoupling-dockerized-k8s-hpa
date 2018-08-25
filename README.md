@@ -49,7 +49,7 @@ choose 1 of the 3 options:
   2. docker-compose up -d
   3. kubernetes - (k8s) 
   ```bash
-  cd monitoring 
+  cd monitoring  
   kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
   kubectl create -f namespaces.yaml,metrics-server,prometheus,custom-metrics-api
   cd ..
