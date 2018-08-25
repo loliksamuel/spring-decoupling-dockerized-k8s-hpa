@@ -19,10 +19,10 @@ services:
       ports:
         - 9090:9090
       volumes:
-        - monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+        - ./prometheus-cfg1.yml:/etc/prometheus/prometheus-cfg1.yml
         - prometheus_data:/prometheus
       command:
-        - '--config.file=/etc/prometheus/prometheus.yml'
+        - '--config.file=/etc/prometheus/prometheus-cfg1.yml'
         - '--storage.tsdb.path=/prometheus'
       depends_on:
         - node-exporter

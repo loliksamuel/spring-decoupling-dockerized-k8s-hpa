@@ -48,6 +48,9 @@ choose 1 of the 3 options:
   1. docker run spring-boot-hpa  -d -p 80:80
   2. docker-compose up -d
   3. kubernetes - (k8s) 
+  cd monitoring && kubectl apply -f namespaces.yaml,metrics-server,prometheus,custom-metrics-api
+  cd .. && kubectl create -f kube/all.yaml
+  
       Deploy the application in Kubernetes with:
 (to convert docker-compose.yml to kubernetes, u can use "kompose convert")
 ```bash
@@ -64,37 +67,31 @@ kubectl create -f ./metrics-server
 After 1 minute the metric-server starts reporting CPU and memory usage for nodes and pods.
 
 View nodes metrics:
-
 ```bash
 kubectl get --raw "/apis/metrics.k8s.io/v1beta1/nodes" | jq .
 ```
 
 View pods metrics:
-
 ```bash
 kubectl get --raw "/apis/metrics.k8s.io/v1beta1/pods" | jq .
 ```
 
 Create the monitoring namespace:
-
 ```bash
 kubectl create -f ./namespaces.yaml
 ```
 
 Deploy Prometheus v2 in the monitoring namespace:
-
 ```bash
 kubectl create -f ./prometheus
 ```
 
 Deploy the Prometheus custom metrics API adapter:
-
 ```bash
 kubectl create -f ./custom-metrics-api
 ```
 
 List the custom metrics provided by Prometheus:
-
 ```bash
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq .
 ```
