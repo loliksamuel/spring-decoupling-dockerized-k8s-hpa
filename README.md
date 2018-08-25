@@ -109,9 +109,10 @@ minikube dashboard
 ```
 
 ##  play with the application
-1. http://minkube_ip:30000   : kubernetes dashboard
-2. You can visit the application backend  at http://minkube_ip:31000
-3. You can visit the application frontend at http://minkube_ip:32000
+1. http://192.168.99.100:30000   : kubernetes dashboard
+2. http://192.168.99.100:31000   : application backend
+3. http://192.168.99.100:32000   : application frontend
+3. http://192.168.99.100:31190   : prometheus monitoring
 4. You should be able to see the number of pending messages (jobs) at http://minkube_ip:32000/metrics and from the custom metrics endpoint:
 
 ```bash
