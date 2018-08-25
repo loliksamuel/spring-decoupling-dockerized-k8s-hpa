@@ -48,10 +48,14 @@ choose 1 of the 3 options:
   1. docker run spring-boot-hpa  -d -p 80:80
   2. docker-compose up -d
   3. kubernetes - (k8s) 
-  cd monitoring && kubectl apply -f namespaces.yaml,metrics-server,prometheus,custom-metrics-api
-  cd .. && kubectl create -f kube/all.yaml
-  
-      Deploy the application in Kubernetes with:
+  ```bash
+  cd monitoring 
+  kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
+  kubectl create -f namespaces.yaml,metrics-server,prometheus,custom-metrics-api
+  cd ..
+  kubectl create -f kube/all.yaml
+  ``` 
+  Deploy the application in Kubernetes with:
 (to convert docker-compose.yml to kubernetes, u can use "kompose convert")
 ```bash
 kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
