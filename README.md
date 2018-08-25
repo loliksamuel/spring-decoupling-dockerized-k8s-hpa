@@ -103,12 +103,14 @@ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/monitoring/pod
  
 minikube dashboard
 ```
+select all name spaces
 
 ##  play with the application
-1. You can visit the kubernetes dashboard at http://minkube_ip:30000
-2. You can visit the application backend  at http://minkube_ip:31000
-3. You can visit the application frontend at http://minkube_ip:32000
-4. You should be able to see the number of pending messages (jobs) at http://minkube_ip:32000/metrics and from the custom metrics endpoint:
+1. http://minkube_ip:30000   : kubernetes dashboard
+2. http://minkube_ip:31000   : application backend
+3. http://minkube_ip:32000   : application frontend
+4. http://minkube_ip:31190   : prometheus monitoring
+5. You should be able to see the number of pending messages (jobs) at http://minkube_ip:32000/metrics and from the custom metrics endpoint:
 
 ```bash
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/messages" | jq .
@@ -167,8 +169,4 @@ minikube stop
 or 
 kops delete cluster --name=useast1.k8s.appychip.vpc --yes
 ```
-
-## Issues
-
-- bug in monitoring
-- bug in hpa 
+ 
