@@ -51,60 +51,75 @@ choose 1 of the 3 options:
   ```bash
   cd monitoring 
   kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
-  kubectl create -f namespaces.yaml,metrics-server,prometheus,custom-metrics-api
+  kubectl create -f namespaces.yaml,metrics-server,prometheus,custom-metrics-api,grafana
   cd ..
   kubectl create -f kube/all.yaml
   ``` 
   Deploy the application in Kubernetes with:
 (to convert docker-compose.yml to kubernetes, u can use "kompose convert")
 ```bash
-kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
-kubectl create -f kube/all.yaml
+$ kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
+$ kubectl create -f kube/all.yaml
 ```
 Deploy the Metrics Server in the `kube-system` namespace:
 
 ```bash
-cd monitoring
-kubectl create -f ./metrics-server
-```
-
+$ cd monitoring
+$ kubectl create -f ./metrics-server
 After 1 minute the metric-server starts reporting CPU and memory usage for nodes and pods.
 
+```
+
+
+
+```bash
+$ kubectl get --raw "/apis/metrics.k8s.io/v1beta1/nodes" | jq .
 View nodes metrics:
-```bash
-kubectl get --raw "/apis/metrics.k8s.io/v1beta1/nodes" | jq .
 ```
 
-View pods metrics:
+
 ```bash
-kubectl get --raw "/apis/metrics.k8s.io/v1beta1/pods" | jq .
+$ kubectl get --raw "/apis/metrics.k8s.io/v1beta1/pods" | jq .
+View pods metrics
 ```
 
-Create the monitoring namespace:
+
 ```bash
-kubectl create -f ./namespaces.yaml
+$ kubectl create -f ./namespaces.yaml
+Create the monitoring namespace
 ```
 
-Deploy Prometheus v2 in the monitoring namespace:
+
 ```bash
-kubectl create -f ./prometheus
+$ kubectl create -f ./prometheus
+Deploy Prometheus v2 in the monitoring namespace
 ```
 
-Deploy the Prometheus custom metrics API adapter:
+
 ```bash
-kubectl create -f ./custom-metrics-api
+$ kubectl create -f ./custom-metrics-api
+ Deploy the Prometheus custom metrics API adapter:
 ```
 
-List the custom metrics provided by Prometheus:
+
 ```bash
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq .
+$ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq .
+ get List the custom metrics provided by Prometheus
 ```
 
-Get the FS usage for all the pods in the `monitoring` namespace:
+
 
 ```bash
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/monitoring/pods/*/fs_usage_bytes" | jq .
- 
+$ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/monitoring/pods/*/fs_usage_bytes" | jq .
+ Get the FS usage for all the pods in the `monitoring` namespace
+```
+
+```bash
+$ kubectl create -f ./grafana
+ Deploy the grafana
+```
+
+```bash
 minikube dashboard
 ```
 
@@ -112,8 +127,10 @@ minikube dashboard
 1. http://192.168.99.100:30000   : kubernetes dashboard
 2. http://192.168.99.100:31000   : application backend
 3. http://192.168.99.100:32000   : application frontend
-3. http://192.168.99.100:31190   : prometheus monitoring
-4. You should be able to see the number of pending messages (jobs) at http://minkube_ip:32000/metrics and from the custom metrics endpoint:
+4. http://192.168.99.100:31190   : prometheus monitoring
+5. http://192.168.99.100:30003   : grafana monitoring
+6. https://192.168.99.100:8443   : kubernetes-apiservers
+7. You should be able to see the number of pending messages (jobs) at http://minkube_ip:32000/metrics and from the custom metrics endpoint:
 
 ```bash
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/messages" | jq .
