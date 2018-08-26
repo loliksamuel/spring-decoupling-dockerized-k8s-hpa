@@ -177,6 +177,8 @@ You should redeploy the Prometheus adapter.
 
 when u r done with app. stop the cluster: using 
 ```sh
+kubectl delete namespace app monitoring
+or
 minikube stop 
 or 
 kops delete cluster --name=useast1.k8s.appychip.vpc --yes

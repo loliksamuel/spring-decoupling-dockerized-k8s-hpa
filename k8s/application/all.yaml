@@ -3,7 +3,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: backend
-  namespace: app
+#  namespace: app
 spec:
   replicas: 1
   template:
@@ -27,7 +27,7 @@ spec:
         ports:
           - containerPort: 8080
         livenessProbe:
-          initialDelaySeconds: 30
+          initialDelaySeconds: 5
           periodSeconds: 5
           httpGet:
             path: /health
@@ -40,7 +40,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: backend
-  namespace: app
+#  namespace: app
 spec:
   ports:
   - nodePort: 31000
@@ -54,7 +54,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: queue
-  namespace: app
+#  namespace: app
 spec:
   replicas: 1
   template:
@@ -76,7 +76,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: queue
-  namespace: app
+#  namespace: app
 spec:
   ports:
   - port: 61616
@@ -88,7 +88,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: app
+#  namespace: app
 spec:
   replicas: 1
   template:
@@ -110,7 +110,7 @@ spec:
         ports:
           - containerPort: 8080
         livenessProbe:
-          initialDelaySeconds: 5
+          initialDelaySeconds: 30
           periodSeconds: 5
           httpGet:
             path: /health
@@ -123,7 +123,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
-  namespace: app
+#  namespace: app
 spec:
   ports:
   - nodePort: 32000
