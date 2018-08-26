@@ -65,4 +65,5 @@ public class QueueService implements MessageListener {
             LOGGER.error("Message is not a text message " + message.toString());
         }
     }
+
 }

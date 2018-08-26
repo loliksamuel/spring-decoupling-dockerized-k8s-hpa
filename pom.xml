@@ -68,27 +68,17 @@
             <artifactId>activemq-kahadb-store</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.apache.activemq</groupId>-->
-            <!--<artifactId>activemq-kahadb-store</artifactId>-->
-            <!--<version>${activemq.version}</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
 
-        <!--<dependency>-->
-            <!--<groupId>org.apache.activemq</groupId>-->
-            <!--<artifactId>activemq-kahadb-exporter</artifactId>-->
-
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.apache.activemq.tooling</groupId>
             <artifactId>activemq-junit</artifactId>
-            <version>${activemq.version}</version>
+            <version>5.15.5</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
+
 
     <build>
         <plugins>

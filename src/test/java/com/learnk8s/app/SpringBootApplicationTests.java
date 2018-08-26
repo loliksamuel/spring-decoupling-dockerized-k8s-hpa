@@ -38,19 +38,22 @@ public class SpringBootApplicationTests {
 
 	@Before
     public void setup() {
+
     }
 
 	@Test
 	public void testSend() throws Exception {
+		int count = queueService.pendingJobs(QUEUE_NAME);
 		queueService.send(QUEUE_NAME, "test");
-		assertThat(queueService.pendingJobs(QUEUE_NAME)).isEqualTo(1);
+		assertThat(queueService.pendingJobs(QUEUE_NAME)).isEqualTo(count+1);
 	}
 
 	@Test
 	public void testReceive() throws Exception {
+		int count = queueService.completedJobs();
 		var message = new ActiveMQTextMessage();
 		message.setText("test");
 		queueService.onMessage(message);
-		assertThat(queueService.completedJobs()).isEqualTo(1);
+		assertThat(queueService.completedJobs()).isEqualTo(count+1);
 	}
 }

@@ -1,5 +1,6 @@
 server:
   address: 0.0.0.0
+  port: 8080
 queue:
   name: ${QUEUE_NAME:mainQueue}
 worker:
@@ -8,7 +9,8 @@ worker:
 store:
   enabled: ${STORE_ENABLED:true}
 spring:
-
 activemq:
     in-memory: true
     brokerUrl: ${ACTIVEMQ_BROKER_URL:vm://localhost:61616}
+
+

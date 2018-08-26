@@ -1,6 +1,7 @@
 package com.learnk8s.app.queue;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.broker.BrokerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,15 @@ import org.springframework.jms.core.JmsTemplate;
 public class QueueConfig {
     @Value("${activemq.brokerUrl}")
     private String brokerUrl;
+
+//    @Bean
+//    public BrokerService broker() throws Exception {
+//        final BrokerService broker = new BrokerService();
+//        broker.addConnector("tcp://localhost:61616");
+//        broker.addConnector("vm://localhost");
+//        broker.setPersistent(false);
+//        return broker;
+//    }
 
     @Bean
     public ActiveMQConnectionFactory activeMQConnectionFactory() {

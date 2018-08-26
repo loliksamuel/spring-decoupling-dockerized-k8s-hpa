@@ -26,6 +26,11 @@ public class SpringBootApplication implements JmsListenerConfigurer {
 
 	public static void main(String[] args) {
         SpringApplication.run(SpringBootApplication.class, args);
+        System.out.println("http://localhost:8080");
+        System.out.println("http://localhost:8080/health");
+        System.out.println("http://localhost:8080/health2");
+        System.out.println("http://localhost:8080/submit/10");
+        System.out.println("http://localhost:8080/metrics");
 	}
 
     @Override
@@ -36,6 +41,7 @@ public class SpringBootApplication implements JmsListenerConfigurer {
             endpoint.setDestination(queueName);
             endpoint.setMessageListener(queueService);
             registrar.registerEndpoint(endpoint);
+
         }
     }
 }

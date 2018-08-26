@@ -40,6 +40,7 @@ You can find more [info about `jq` on the official website](https://github.com/s
 ## create application image
 make images and package the application as a container with:
 ```bash
+docker   rmi    spring-boot-hpa
 docker build -t spring-boot-hpa .
 ```
 
@@ -111,7 +112,10 @@ $ kubectl create -f ./grafana
 
 
 ##  play with the application
-0. http://localhost:8080         : play locally and validate no error
+# play locally
+1. http://localhost:8080         : play locally with metrics and submit endpoints
+2. http://localhost:8161/admin/browse.jsp?JMSDestination=mainQueue : active mq console ,admin admin  and validate messages
+# play in cluster
 1. http://192.168.99.100:30000   : kubernetes dashboard
 2. http://192.168.99.100:31000   : application backend
 3. http://192.168.99.100:32000   : application frontend

@@ -53,24 +53,26 @@ public class HelloController {
         return "success";
     }
 
-//
-//    @GetMapping("/submit/{qty}")
-//    public String submit1(@PathVariable int qty) {
-//        for (long i = 0; i < qty; i++) {
-//            String id = UUID.randomUUID().toString();
-//            queueService.send(queueName, id);
-//        }
-//        return "succeeeded send "+qty+ " jobs";
-//    }
+//    @ResponseBody
+    @GetMapping("/submit/{qty}")
+    public String submit1(@PathVariable int qty, @ModelAttribute Ticket ticket) {
+        for (long i = 0; i < qty; i++) {
+            String id = UUID.randomUUID().toString();
+            queueService.send(queueName, id);
+        }
+        ticket.setQuantity(qty);
+        return "success";//"succeeeded send "+qty+ " jobs";
+    }
 
     @ResponseBody
-    @RequestMapping(value="/metrics", produces="text/plain")
+    @GetMapping(value="/metrics", produces="text/plain")
     public String metrics() {
         int totalMessages = queueService.pendingJobs(queueName);
         return "# HELP messages Number of messages in the queueService\n"
                 + "# TYPE messages gauge\n"
                 + "messages " + totalMessages;
     }
+
 
     @RequestMapping(value="/health")
     public ResponseEntity health() {
@@ -81,6 +83,19 @@ public class HelloController {
             status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<>(status);
+    }
+
+
+    @ResponseBody
+    @GetMapping(value="/health2")
+    public String health2() {
+        HttpStatus status;
+        if (queueService.isUp()) {
+            status = HttpStatus.OK;
+        } else {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return  "queueService status is "+status;
     }
 
 
