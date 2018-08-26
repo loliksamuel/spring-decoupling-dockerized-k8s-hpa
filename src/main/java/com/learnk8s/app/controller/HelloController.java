@@ -53,15 +53,15 @@ public class HelloController {
         return "success";
     }
 
-
-    @GetMapping("/submit/{qty}")
-    public String submit1(@PathVariable int qty) {
-        for (long i = 0; i < qty; i++) {
-            String id = UUID.randomUUID().toString();
-            queueService.send(queueName, id);
-        }
-        return "succeeeded send "+qty+ " jobs";
-    }
+//
+//    @GetMapping("/submit/{qty}")
+//    public String submit1(@PathVariable int qty) {
+//        for (long i = 0; i < qty; i++) {
+//            String id = UUID.randomUUID().toString();
+//            queueService.send(queueName, id);
+//        }
+//        return "succeeeded send "+qty+ " jobs";
+//    }
 
     @ResponseBody
     @RequestMapping(value="/metrics", produces="text/plain")

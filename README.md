@@ -47,67 +47,57 @@ docker build -t spring-boot-hpa .
 choose 1 of the 3 options:
   1. docker run spring-boot-hpa  -d -p 80:80
   2. docker-compose up -d
-  3. kubernetes - (k8s) 
+  3. k8s - (Deploy the application in Kubernetes ) 
   ```bash
-  cd monitoring 
-  kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
-  kubectl create -f namespaces.yaml,metrics-server,prometheus,custom-metrics-api,grafana
-  cd ..
-  kubectl create -f kube/all.yaml
+  $ cd k8s 
+  $ kubectl delete namespace monitoring app && kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
+  $ kubectl create -f namespaces.yaml,metrics-server,prometheus,custom-metrics-api,grafana,application/all.yaml
+  $ minikube dashboard
+  to see kubernetes resources
+  
   ``` 
-  Deploy the application in Kubernetes with:
-(to convert docker-compose.yml to kubernetes, u can use "kompose convert")
+   u can also deploy 1 step at a time
+(note: to convert docker-compose.yml to kubernetes, u can use "kompose convert")
 ```bash
 $ kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
-$ kubectl create -f kube/all.yaml
+$ kubectl create -f application/all.yaml
 ```
 Deploy the Metrics Server in the `kube-system` namespace:
 
 ```bash
-$ cd monitoring
 $ kubectl create -f ./metrics-server
 After 1 minute the metric-server starts reporting CPU and memory usage for nodes and pods.
-
 ```
-
-
 
 ```bash
 $ kubectl get --raw "/apis/metrics.k8s.io/v1beta1/nodes" | jq .
 View nodes metrics:
 ```
 
-
 ```bash
 $ kubectl get --raw "/apis/metrics.k8s.io/v1beta1/pods" | jq .
 View pods metrics
 ```
-
 
 ```bash
 $ kubectl create -f ./namespaces.yaml
 Create the monitoring namespace
 ```
 
-
 ```bash
 $ kubectl create -f ./prometheus
 Deploy Prometheus v2 in the monitoring namespace
 ```
-
 
 ```bash
 $ kubectl create -f ./custom-metrics-api
  Deploy the Prometheus custom metrics API adapter:
 ```
 
-
 ```bash
 $ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq .
  get List the custom metrics provided by Prometheus
 ```
-
-
 
 ```bash
 $ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/monitoring/pods/*/fs_usage_bytes" | jq .
@@ -119,11 +109,9 @@ $ kubectl create -f ./grafana
  Deploy the grafana
 ```
 
-```bash
-minikube dashboard
-```
 
 ##  play with the application
+0. http://localhost:8080         : play locally and validate no error
 1. http://192.168.99.100:30000   : kubernetes dashboard
 2. http://192.168.99.100:31000   : application backend
 3. http://192.168.99.100:32000   : application frontend
@@ -140,7 +128,7 @@ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*
 You can scale the application (backend workers) in proportion to the number of messages in the queue with the Horizontal Pod Autoscaler. You can deploy the HPA with:
 
 ```bash
-kubectl create -f kube/hpa.yaml
+kubectl create -f application/hpa.yaml
 ```
 
 You can send more traffic to the application with:

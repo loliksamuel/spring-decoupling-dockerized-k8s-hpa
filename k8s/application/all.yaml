@@ -3,6 +3,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: backend
+  namespace: app
 spec:
   replicas: 1
   template:
@@ -39,6 +40,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: backend
+  namespace: app
 spec:
   ports:
   - nodePort: 31000
@@ -52,6 +54,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: queue
+  namespace: app
 spec:
   replicas: 1
   template:
@@ -61,7 +64,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: webcenter/activemq:5.14.3
+        image: webcenter/activemq
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 61616
@@ -73,6 +76,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: queue
+  namespace: app
 spec:
   ports:
   - port: 61616
@@ -84,6 +88,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: frontend
+  namespace: app
 spec:
   replicas: 1
   template:
@@ -118,6 +123,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
+  namespace: app
 spec:
   ports:
   - nodePort: 32000
