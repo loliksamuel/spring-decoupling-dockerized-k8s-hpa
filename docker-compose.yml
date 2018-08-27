@@ -11,11 +11,11 @@ services:
     image: spring-boot-hpa3:latest
     ports:
            - "31000:8080"
-           - "8000:8000"
+           - "8001:8000"
     environment:
             - ACTIVEMQ_BROKER_URL=tcp://queue:61616
 #           - ACTIVEMQ_BROKER_URL=tcp://0.0.0.0:61616
-#            - ACTIVEMQ_BROKER_URL=vm://localhost:61616
+#           - ACTIVEMQ_BROKER_URL=vm://localhost:61616
             - STORE_ENABLED=false
             - WORKER_ENABLED=true
     depends_on:
@@ -27,11 +27,11 @@ services:
     image: spring-boot-hpa3:latest
     ports:
            - "32000:8080"
-           - "8001:8000"
+           - "8002:8000"
     environment:
             - ACTIVEMQ_BROKER_URL=tcp://queue:61616
 #           - ACTIVEMQ_BROKER_URL=tcp://0.0.0.0:61616
-#            - ACTIVEMQ_BROKER_URL=vm://localhost:61616
+#           - ACTIVEMQ_BROKER_URL=vm://localhost:61616
             - STORE_ENABLED=true
             - WORKER_ENABLED=false
     depends_on:

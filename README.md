@@ -20,14 +20,13 @@ minikube start \
 cd ..
 eval $(minikube docker-env)
 ```
-
- validate the cluster exists   : 
 ```sh
-kubectl config current-context 
+$ kubectl config current-context 
 or 
-kubectl cluster-info
+$ kubectl cluster-info
 or 
 kubectl get nodes
+validate the cluster exists   
 ```
 > If you're using a pre-existing minikube instance, you can resize the VM by destroying it an recreating it. Just adding the `--memory 4096` won't have any effect.
 
