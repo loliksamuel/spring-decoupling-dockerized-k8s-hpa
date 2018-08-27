@@ -1,9 +1,11 @@
 package com.learnk8s.app.queue;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +47,11 @@ public class QueueService implements MessageListener {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public String getBrokerUrl() {
+       return ((ActiveMQConnectionFactory)((CachingConnectionFactory)jmsTemplate.getConnectionFactory()).getTargetConnectionFactory()).getBrokerURL();
+
     }
 
     @Override

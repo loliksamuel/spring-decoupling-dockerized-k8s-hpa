@@ -68,9 +68,12 @@ public class HelloController {
     @GetMapping(value="/metrics", produces="text/plain")
     public String metrics() {
         int totalMessages = queueService.pendingJobs(queueName);
-        return "# HELP messages Number of messages in the queueService\n"
-                + "# TYPE messages gauge\n"
-                + "messages " + totalMessages;
+        return "# HELP messages Number of messages in the queueService"
+                + "\n# TYPE messages gauge"
+                + "\nqueueName="+queueName
+                + "\nisUP? = "+(queueService.isUp() ? "yes" : "no")
+                + "\nurl? = " +queueService.getBrokerUrl()
+                + "\nmessages " + totalMessages;
     }
 
 
@@ -87,7 +90,7 @@ public class HelloController {
 
 
     @ResponseBody
-    @GetMapping(value="/healtTest2")
+    @GetMapping(value="/health2")
     public String health2() {
         HttpStatus status;
         if (queueService.isUp()) {

@@ -6,19 +6,35 @@ volumes:
   grafana_data: {}
 
 services:
-  spring-boot-hpa:
+  backend:
+    container_name: hpa-backend
     image: spring-boot-hpa2:latest
     ports:
-           - "8080:8080"
+           - "31000:8080"
     environment:
-            - ACTIVEMQ_BROKER_URL=tcp://queue:61616
-            - STORE_ENABLED=true
+            - ACTIVEMQ_BROKER_URL=vm://localhost:61616
+            - STORE_ENABLED=false
             - WORKER_ENABLED=true
     depends_on:
        - activemq
 
 
+  frontend:
+    container_name: hpa-frontend
+    image: spring-boot-hpa2:latest
+    ports:
+           - "32000:8080"
+    environment:
+#            - ACTIVEMQ_BROKER_URL=tcp://localhost:61616
+            - ACTIVEMQ_BROKER_URL=vm://localhost:61616
+            - STORE_ENABLED=true
+            - WORKER_ENABLED=false
+    depends_on:
+       - activemq
+
+
   activemq:
+    container_name: hpa-mq
     image: webcenter/activemq:5.14.3
     ports:
       - "61616:61616"
@@ -26,6 +42,7 @@ services:
 
 
   node-exporter:
+    container_name: hpa-xport
     image: prom/node-exporter:v0.15.1
     ports:
         - 9100:9100
@@ -41,6 +58,7 @@ services:
 
 
   prometheus:
+      container_name: hpa-prom
       image: prom/prometheus:v2.0.0
       ports:
         - 9090:9090
@@ -54,6 +72,7 @@ services:
         - node-exporter
 
   grafana:
+      container_name: hpa-grafana
       image: grafana/grafana:4.3.2
       ports:
         - 3000:3000
