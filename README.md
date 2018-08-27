@@ -112,16 +112,16 @@ $ kubectl create -f ./grafana
 
 
 ##  play with the application
-# play locally
+### play locally
 1. http://localhost:8080         : 
 2. http://localhost:8080/metrics : metrics of queue 
 3. http://localhost:8161/admin/browse.jsp?JMSDestination=mainQueue : active mq console ,admin admin  and validate messages
-# play in docker-compose cluster
+### play in docker-compose cluster
 1. http://localhost:31000
 2. http://localhost:32000
 3. http://localhost:31000/metrics
 4. http://localhost:32000/metrics
-# play in kubectl cluster
+### play in kubectl cluster
 1. http://192.168.99.100:30000   : kubernetes dashboard
 2. http://192.168.99.100:31000   : application backend
 3. http://192.168.99.100:32000   : application frontend
@@ -196,7 +196,11 @@ kops delete cluster --name=useast1.k8s.appychip.vpc --yes
 - bug in hpa 
 
 ## Debugging
+```sh
+remote dubugging listenning on docker port(8000)
+docker logs <container_id>
 kubectl get events
 kubectl get pods --namespace app
 kubectl logs backend-dff7f9579-brhbd   --namespace app
 kubectl logs frontend-6f555ff497-22kp4 --namespace app
+```
