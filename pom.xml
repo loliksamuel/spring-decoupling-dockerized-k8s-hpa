@@ -5,7 +5,7 @@
 
     <groupId>com.learnk8s</groupId>
     <artifactId>spring-boot-k8s-hpa</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>spring-boot-k8s-hpa</name>

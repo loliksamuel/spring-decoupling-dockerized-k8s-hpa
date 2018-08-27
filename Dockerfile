@@ -10,6 +10,6 @@ WORKDIR /app
 EXPOSE 8080
 ENV STORE_ENABLED=true
 ENV WORKER_ENABLED=true
-COPY --from=build /app/target/spring-boot-k8s-hpa-0.0.2-SNAPSHOT.jar /app
+COPY --from=build /app/target/spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar /app
 
-CMD ["java", "-jar", "spring-boot-k8s-hpa-0.0.2-SNAPSHOT.jar"]
+CMD ["java", "-jar", "spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar"]

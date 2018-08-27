@@ -40,13 +40,13 @@ You can find more [info about `jq` on the official website](https://github.com/s
 ## create application image
 make images and package the application as a container with:
 ```bash
-docker   rmi    spring-boot-hpa2
-docker build -t spring-boot-hpa2 .
+docker   rmi    spring-boot-hpa3
+docker build -t spring-boot-hpa3 .
 ```
 
 ## Deploying the application
 choose 1 of the 3 options:
-  1. docker run spring-boot-hpa2  -d -p 80:80
+  1. docker run spring-boot-hpa3  -d -p 80:80
   2. docker-compose up -d
   3. k8s - (Deploy the application in Kubernetes ) 
   ```bash
@@ -113,9 +113,15 @@ $ kubectl create -f ./grafana
 
 ##  play with the application
 # play locally
-1. http://localhost:8080         : play locally with metrics and submit endpoints
-2. http://localhost:8161/admin/browse.jsp?JMSDestination=mainQueue : active mq console ,admin admin  and validate messages
-# play in cluster
+1. http://localhost:8080         : 
+2. http://localhost:8080/metrics : metrics of queue 
+3. http://localhost:8161/admin/browse.jsp?JMSDestination=mainQueue : active mq console ,admin admin  and validate messages
+# play in docker-compose cluster
+1. http://localhost:31000
+2. http://localhost:32000
+3. http://localhost:31000/metrics
+4. http://localhost:32000/metrics
+# play in kubectl cluster
 1. http://192.168.99.100:30000   : kubernetes dashboard
 2. http://192.168.99.100:31000   : application backend
 3. http://192.168.99.100:32000   : application frontend
@@ -154,7 +160,7 @@ The autoscaler will remove pods from the deployment every 5 minutes.
 You can inspect the event and triggers in the HPA with:
 
 ```bash
-kubectl get hpa spring-boot-hpa2
+kubectl get hpa spring-boot-hpa3
 ```
 
 ## Appendix

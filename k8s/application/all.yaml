@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: spring-boot-hpa2
+        image: spring-boot-hpa3
         imagePullPolicy: IfNotPresent
         env:
         - name: ACTIVEMQ_BROKER_URL
@@ -65,7 +65,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: spring-boot-hpa2
+        image: spring-boot-hpa3
         imagePullPolicy: IfNotPresent
         env:
         - name: ACTIVEMQ_BROKER_URL
