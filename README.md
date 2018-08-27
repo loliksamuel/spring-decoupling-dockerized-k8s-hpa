@@ -40,19 +40,19 @@ You can find more [info about `jq` on the official website](https://github.com/s
 ## create application image
 make images and package the application as a container with:
 ```bash
-docker   rmi    spring-boot-hpa
-docker build -t spring-boot-hpa .
+docker   rmi    spring-boot-hpa2
+docker build -t spring-boot-hpa2 .
 ```
 
 ## Deploying the application
 choose 1 of the 3 options:
-  1. docker run spring-boot-hpa  -d -p 80:80
+  1. docker run spring-boot-hpa2  -d -p 80:80
   2. docker-compose up -d
   3. k8s - (Deploy the application in Kubernetes ) 
   ```bash
   $ cd k8s 
   $ kubectl delete namespace monitoring app && kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
-  $ kubectl create -f namespaces.yaml,metrics-server,prometheus,custom-metrics-api,grafana,application/all.yaml
+  $ kubectl apply -f namespaces.yaml,application/all.yaml,metrics-server,prometheus,custom-metrics-api,grafana
   $ minikube dashboard
   to see kubernetes resources
   
@@ -154,7 +154,7 @@ The autoscaler will remove pods from the deployment every 5 minutes.
 You can inspect the event and triggers in the HPA with:
 
 ```bash
-kubectl get hpa spring-boot-hpa
+kubectl get hpa spring-boot-hpa2
 ```
 
 ## Appendix
@@ -188,3 +188,9 @@ kops delete cluster --name=useast1.k8s.appychip.vpc --yes
 
 - bug in monitoring
 - bug in hpa 
+
+## Debugging
+kubectl get events
+kubectl get pods --namespace app
+kubectl logs backend-dff7f9579-brhbd   --namespace app
+kubectl logs frontend-6f555ff497-22kp4 --namespace app

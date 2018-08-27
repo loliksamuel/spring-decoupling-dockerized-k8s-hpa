@@ -74,7 +74,7 @@ public class HelloController {
     }
 
 
-    @RequestMapping(value="/health")
+    @GetMapping("/health")
     public ResponseEntity health() {
         HttpStatus status;
         if (queueService.isUp()) {
@@ -87,7 +87,7 @@ public class HelloController {
 
 
     @ResponseBody
-    @GetMapping(value="/health2")
+    @GetMapping(value="/healtTest2")
     public String health2() {
         HttpStatus status;
         if (queueService.isUp()) {

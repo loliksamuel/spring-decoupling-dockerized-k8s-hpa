@@ -11,7 +11,7 @@ import org.springframework.jms.config.SimpleJmsListenerEndpoint;
 
 @org.springframework.boot.autoconfigure.SpringBootApplication
 @EnableJms
-public class SpringBootApplication implements JmsListenerConfigurer {
+public class _ApplicationSpringBoot implements JmsListenerConfigurer {
     @Value("${queue.name}")
     private String queueName;
 
@@ -25,7 +25,7 @@ public class SpringBootApplication implements JmsListenerConfigurer {
     private QueueService queueService;
 
 	public static void main(String[] args) {
-        SpringApplication.run(SpringBootApplication.class, args);
+        SpringApplication.run(_ApplicationSpringBoot.class, args);
         System.out.println("http://localhost:8080");
         System.out.println("http://localhost:8080/health");
         System.out.println("http://localhost:8080/health2");

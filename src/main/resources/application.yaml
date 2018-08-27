@@ -8,9 +8,9 @@ worker:
   enabled: ${WORKER_ENABLED:true}
 store:
   enabled: ${STORE_ENABLED:true}
-spring:
+
 activemq:
-    in-memory: true
+#    in-memory: true
     brokerUrl: ${ACTIVEMQ_BROKER_URL:vm://localhost:61616}
 
 

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: spring-boot-hpa
+        image: spring-boot-hpa2
         imagePullPolicy: IfNotPresent
         env:
         - name: ACTIVEMQ_BROKER_URL
@@ -32,6 +32,7 @@ spec:
           httpGet:
             path: /health
             port: 8080
+#            scheme: HTTP
         resources:
           limits:
             memory: 512Mi
@@ -48,6 +49,56 @@ spec:
     targetPort: 8080
   selector:
     app: backend
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: spring-boot-hpa2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ACTIVEMQ_BROKER_URL
+          value: "tcp://queue:61616"
+        - name: STORE_ENABLED
+          value: "true"
+        - name: WORKER_ENABLED
+          value: "false"
+        ports:
+          - containerPort: 8080
+        livenessProbe:
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          httpGet:
+            path: /health
+            port: 8080
+#            scheme: HTTP
+        resources:
+          limits:
+            memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: app
+spec:
+  ports:
+  - nodePort: 32000
+    port: 80
+    targetPort: 8080
+  selector:
+    app: frontend
   type: NodePort
 ---
 apiVersion: extensions/v1beta1
@@ -84,51 +135,3 @@ spec:
   selector:
     app: queue
 ---
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: frontend
-  namespace: app
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: frontend
-    spec:
-      containers:
-      - name: frontend
-        image: spring-boot-hpa
-        imagePullPolicy: IfNotPresent
-        env:
-        - name: ACTIVEMQ_BROKER_URL
-          value: "tcp://queue:61616"
-        - name: STORE_ENABLED
-          value: "true"
-        - name: WORKER_ENABLED
-          value: "false"
-        ports:
-          - containerPort: 8080
-        livenessProbe:
-          initialDelaySeconds: 30
-          periodSeconds: 5
-          httpGet:
-            path: /health
-            port: 8080
-        resources:
-          limits:
-            memory: 512Mi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-  namespace: app
-spec:
-  ports:
-  - nodePort: 32000
-    port: 80
-    targetPort: 8080
-  selector:
-    app: frontend
-  type: NodePort

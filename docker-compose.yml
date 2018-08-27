@@ -1,20 +1,46 @@
 # run this file using "docker-compose up -d
 version: '3'
 
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+
 services:
-   web:
-     build: .
-     environment:
-       REDIS_URL: tcp://localhost:61616
-     depends_on:
+  spring-boot-hpa:
+    image: spring-boot-hpa2:latest
+    ports:
+           - "8080:8080"
+    environment:
+            - ACTIVEMQ_BROKER_URL=tcp://queue:61616
+            - STORE_ENABLED=true
+            - WORKER_ENABLED=true
+    depends_on:
        - activemq
-     ports:
-       - "8080:8080"
 
-   activemq:
-     image: webcenter/activemq:5.14.3
 
-   prometheus:
+  activemq:
+    image: webcenter/activemq:5.14.3
+    ports:
+      - "61616:61616"
+
+
+
+  node-exporter:
+    image: prom/node-exporter:v0.15.1
+    ports:
+        - 9100:9100
+    volumes:
+        - /proc:/host/proc
+        - /sys:/host/sys
+        - /:/rootfs
+    command:
+        - "--path.procfs=/host/proc"
+        - "--path.sysfs=/host/sys"
+        - "--collector.textfile.directory=/etc/node-exporter/"
+        - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+
+
+  prometheus:
       image: prom/prometheus:v2.0.0
       ports:
         - 9090:9090
@@ -27,21 +53,7 @@ services:
       depends_on:
         - node-exporter
 
-    node-exporter:
-      image: prom/node-exporter:v0.15.1
-      ports:
-        - 9100:9100
-      volumes:
-        - /proc:/host/proc
-        - /sys:/host/sys
-        - /:/rootfs
-      command:
-        - "--path.procfs=/host/proc"
-        - "--path.sysfs=/host/sys"
-        - "--collector.textfile.directory=/etc/node-exporter/"
-        - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
-
-    grafana:
+  grafana:
       image: grafana/grafana:4.3.2
       ports:
         - 3000:3000
