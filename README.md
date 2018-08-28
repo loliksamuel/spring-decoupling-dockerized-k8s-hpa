@@ -1,49 +1,43 @@
 # Autoscaling Spring Boot with the Horizontal Pod Autoscaler and custom metrics on Kubernetes
  see https://medium.freecodecamp.org/how-to-scale-microservices-with-message-queues-spring-boot-and-kubernetes-f691b7ba3acf
 
-## prepare the cluster
+You should install `jq` — a lightweight and flexible command-line JSON processor.
+You can find more [info about `jq` on the official website](https://github.com/stedolan/jq).
 
+## prepare the cluster
 You should have minikube installed.
 
 You should start minikube with at least 4GB of RAM:
 
 ```bash
-minikube start \
+$ minikube start \
   --memory 8192 \
   --extra-config=controller-manager.horizontal-pod-autoscaler-upscale-delay=1m \
   --extra-config=controller-manager.horizontal-pod-autoscaler-downscale-delay=2m \
   --extra-config=controller-manager.horizontal-pod-autoscaler-sync-period=10s
-```
+If you're using a pre-existing minikube instance, you can resize the VM by destroying it an recreating it. Just adding the `--memory 4096` won't have any effect.
+  
 
- Run this command to configure your shell:
-```bash
-cd ..
-eval $(minikube docker-env)
-```
-```sh
+$ cd ..
+$ eval $(minikube docker-env)
+Run this command to configure your shell:
+ 
 $ kubectl config current-context 
 or 
 $ kubectl cluster-info
 or 
-kubectl get nodes
+$ kubectl get nodes
 validate the cluster exists   
 ```
-> If you're using a pre-existing minikube instance, you can resize the VM by destroying it an recreating it. Just adding the `--memory 4096` won't have any effect.
-
-You should install `jq` — a lightweight and flexible command-line JSON processor.
-
-You can find more [info about `jq` on the official website](https://github.com/stedolan/jq).
-
-
 
 ## create application image
-make images and package the application as a container with:
 ```bash
-docker   rmi    spring-boot-hpa3
-docker build -t spring-boot-hpa3 .
+$ docker   rmi    spring-boot-hpa3
+$ docker build -t spring-boot-hpa3 .
+make images and package the application as a container
 ```
 
-## Deploying the application
+## Deploying the application (prefer 3)
 choose 1 of the 3 options:
   1. docker run spring-boot-hpa3  -d -p 80:80
   2. docker-compose up -d
@@ -51,7 +45,8 @@ choose 1 of the 3 options:
   ```bash
   $ cd k8s 
   $ kubectl delete namespace monitoring app && kubectl delete deployments --all &&  kubectl delete pods   --all &&  kubectl delete services --all
-  $ kubectl apply -f namespaces.yaml,application/all.yaml,metrics-server,prometheus,custom-metrics-api,grafana
+  $ kubectl apply -f namespaces.yaml,application/all.yaml
+  $ kubectl apply -f metrics-server,prometheus,custom-metrics-api,grafana
   $ minikube dashboard
   to see kubernetes resources
   
