@@ -50,6 +50,9 @@ choose 1 of the 3 options: (prefer #3)
   2. docker-compose up
   ```bash 
   $ docker-compose up -d
+  or for debug mode
+  docker-compose -f docker/debug/docker-compose.yml up -d 
+  $ 
   ``` 
   3. k8s - (Deploy the application in Kubernetes ) 
   ```bash
