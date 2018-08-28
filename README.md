@@ -15,7 +15,7 @@ $ minikube start \
   --extra-config=controller-manager.horizontal-pod-autoscaler-upscale-delay=1m \
   --extra-config=controller-manager.horizontal-pod-autoscaler-downscale-delay=2m \
   --extra-config=controller-manager.horizontal-pod-autoscaler-sync-period=10s
-If you're using a pre-existing minikube instance, you can resize the VM by destroying it an recreating it. Just adding the `--memory 4096` won't have any effect.
+You should start minikube with at least 4GB of RAM. If you're using a pre-existing minikube instance, you can resize the VM by destroying it an recreating it. Just adding the `--memory 4096` won't have any effect.
   
 
 $ cd ..
@@ -37,8 +37,8 @@ $ docker build -t spring-boot-hpa3 .
 make images and package the application as a container
 ```
 
-## Deploying the application (prefer 3)
-choose 1 of the 3 options:
+## Deploying the application 
+choose 1 of the 3 options: (prefer #3)
   1. docker run 
    ```bash
      $ docker run  -d --name "hpa-queue"    -p 61616:61616  webcenter/activemq:5.14.3
@@ -208,6 +208,7 @@ docker run  -d -e "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=50505,se
             spring-boot-hpa3
 docker-compose -f docker/debug/docker-compose.yml up
 docker logs <container_id>
+
 kubectl get events
 kubectl get pods --namespace app
 kubectl logs backend-dff7f9579-brhbd   --namespace app
