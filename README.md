@@ -202,7 +202,10 @@ kops delete cluster --name=useast1.k8s.appychip.vpc --yes
 ## Debugging
 ```sh
 remote dubugging listenning on docker port(8000)
-docer run -e "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=50505,server=y,suspend=y" spring-boot-hpa3
+docker run  -d -e "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=50505,server=y,suspend=y" \
+            -p 31000:8080 \
+            -p 50505:50505 \ 
+            spring-boot-hpa3
 docker-compose -f docker/debug/docker-compose.yml up
 docker logs <container_id>
 kubectl get events
