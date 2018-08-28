@@ -8,10 +8,10 @@ volumes:
 services:
   backend:
     container_name: hpa-backend
-    image: spring-boot-hpa3:latest
+    image: spring-boot-hpa3-debug:latest
     ports:
            - "31000:8080"
-#           - "8001:8000"
+#           - 50505:50505
     environment:
             - ACTIVEMQ_BROKER_URL=tcp://queue:61616
 #           - ACTIVEMQ_BROKER_URL=tcp://0.0.0.0:61616
@@ -24,10 +24,10 @@ services:
 
   frontend:
     container_name: hpa-frontend
-    image: spring-boot-hpa3:latest
+    image: spring-boot-hpa3-debug:latest
     ports:
            - "32000:8080"
-#           - "8002:8000"
+#           - 50506:50505
     environment:
             - ACTIVEMQ_BROKER_URL=tcp://queue:61616
 #           - ACTIVEMQ_BROKER_URL=tcp://0.0.0.0:61616

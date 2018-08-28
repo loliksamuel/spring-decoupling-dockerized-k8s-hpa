@@ -197,6 +197,7 @@ kops delete cluster --name=useast1.k8s.appychip.vpc --yes
 ## Debugging
 ```sh
 remote dubugging listenning on docker port(8000)
+docker-compose -f docker/debug/docker-compose.yml up
 docker logs <container_id>
 kubectl get events
 kubectl get pods --namespace app
