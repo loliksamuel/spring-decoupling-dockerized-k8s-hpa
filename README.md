@@ -47,7 +47,7 @@ choose 1 of the 3 options: (prefer #3)
 ``` 
  
             
-  2. docker-compose
+  2. docker-compose up
   ```bash 
   $ docker-compose up -d
   ``` 
@@ -201,14 +201,17 @@ kops delete cluster --name=useast1.k8s.appychip.vpc --yes
 
 ## Debugging
 ```sh
-remote dubugging listenning on docker port(8000)
-docker run  -d -e "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=50505,server=y,suspend=y" \
-            -p 31000:8080 \
-            -p 50505:50505 \ 
-            spring-boot-hpa3
-docker-compose -f docker/debug/docker-compose.yml up
+remote dubugging listenning on docker port(50505)
+docker build -t spring-boot-hpa3-debug .
+docker run  -e "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=*:50505,server=y,suspend=y" \
+            -p 50505:50505  \ 
+            -p 31000:8080  \ 
+             spring-boot-hpa3-debug
+docker-compose -f docker/debug/docker-compose.yml up\
+docker exec -it <container_id> bash
 docker logs <container_id>
-
+http://localhost:31000
+same do on frontend
 kubectl get events
 kubectl get pods --namespace app
 kubectl logs backend-dff7f9579-brhbd   --namespace app

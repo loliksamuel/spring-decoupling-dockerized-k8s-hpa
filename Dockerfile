@@ -1,14 +1,18 @@
-FROM maven:3.5.3-jdk-10-slim as build
-WORKDIR /app
-COPY pom.xml .
-COPY src src
-RUN mvn package -q -Dmaven.test.skip=true
-
+# best practice to make mvn package by hand
+#FROM maven:3.5.3-jdk-10-slim as build
+#WORKDIR /app
+#COPY pom.xml .
+#COPY src src
+#RUN mvn package -q -Dmaven.test.skip=true
+#
 
 FROM openjdk:10.0.1-10-jre-slim
-WORKDIR /app
-
-
+#FROM openjdk:10-jdk
+#FROM java:10
+#WORKDIR /app
+#VOLUME /tmp
+ADD target/spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar /app.jar
+#RUN sh -c 'touch /app.jar'
 ENV STORE_ENABLED=true
 ENV WORKER_ENABLED=true
 
@@ -22,14 +26,9 @@ ENV WORKER_ENABLED=true
 #EXPOSE 50505
 
 #  production port
-EXPOSE 8080
+#EXPOSE 8080
 
-COPY --from=build /app/target/spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar /app
 
-CMD ["java", "-jar", "spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar"]
+#ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -jar /app.jar" ]
 
-#CMD ["java", \
-#    "-agentlib:jdwp=transport=dt_socket,address=50505,server=y,suspend=n", \
-#    "-Djava.security.egd=file:/dev/./urandom", \
-#    "-jar", \
-#    "spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar"]
+

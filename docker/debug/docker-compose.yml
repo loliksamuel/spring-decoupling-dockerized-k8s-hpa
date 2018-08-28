@@ -10,8 +10,8 @@ services:
     container_name: hpa-backend
     image: spring-boot-hpa3-debug:latest
     ports:
-           - "31000:8080"
-#           - 50505:50505
+           - 31000:8080
+           - 50505:50505
     environment:
             - ACTIVEMQ_BROKER_URL=tcp://queue:61616
 #           - ACTIVEMQ_BROKER_URL=tcp://0.0.0.0:61616
@@ -20,14 +20,15 @@ services:
             - WORKER_ENABLED=true
     depends_on:
        - queue
+    command: "java '-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:50505' -jar /app.jar"
 
 
   frontend:
     container_name: hpa-frontend
     image: spring-boot-hpa3-debug:latest
     ports:
-           - "32000:8080"
-#           - 50506:50505
+           - 32000:8080
+           - 50506:50506
     environment:
             - ACTIVEMQ_BROKER_URL=tcp://queue:61616
 #           - ACTIVEMQ_BROKER_URL=tcp://0.0.0.0:61616
@@ -36,6 +37,7 @@ services:
             - WORKER_ENABLED=false
     depends_on:
        - queue
+    command: "java '-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:50506' -jar /app.jar"
 
 
   queue:

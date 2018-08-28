@@ -26,6 +26,10 @@ spec:
           value: "true"
         ports:
           - containerPort: 8080
+        command:
+          - java
+          - -jar
+          - /app.jar
         livenessProbe:
           initialDelaySeconds: 5
           periodSeconds: 5
@@ -76,6 +80,10 @@ spec:
           value: "false"
         ports:
           - containerPort: 8080
+        command:
+          - java
+          - -jar
+          - /app.jar
         livenessProbe:
           initialDelaySeconds: 30
           periodSeconds: 5

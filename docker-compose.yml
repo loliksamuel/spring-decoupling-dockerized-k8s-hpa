@@ -20,7 +20,7 @@ services:
             - WORKER_ENABLED=true
     depends_on:
        - queue
-
+    command: "java  -jar /app.jar"
 
   frontend:
     container_name: hpa-frontend
@@ -36,6 +36,7 @@ services:
             - WORKER_ENABLED=false
     depends_on:
        - queue
+    command: "java  -jar /app.jar"
 
 
   queue:
