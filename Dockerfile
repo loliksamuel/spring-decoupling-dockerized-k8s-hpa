@@ -29,6 +29,7 @@ COPY --from=build /app/target/spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar /app
 CMD ["java", "-jar", "spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar"]
 
 #CMD ["java", \
-#    "-agentlib:jdwp=transport=dt_socket,address=50505,suspend=n,server=y", \
+#    "-agentlib:jdwp=transport=dt_socket,address=50505,server=y,suspend=n", \
+#    "-Djava.security.egd=file:/dev/./urandom", \
 #    "-jar", \
 #    "spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar"]

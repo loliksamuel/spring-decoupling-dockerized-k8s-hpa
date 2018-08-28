@@ -39,8 +39,18 @@ make images and package the application as a container
 
 ## Deploying the application (prefer 3)
 choose 1 of the 3 options:
-  1. docker run spring-boot-hpa3  -d -p 80:80
-  2. docker-compose up -d
+  1. docker run 
+   ```bash
+     $ docker run  -d --name "hpa-queue"    -p 61616:61616  webcenter/activemq:5.14.3
+     $ docker run  -d --name "hpa-backend"  -p 31000:8080 -e ACTIVEMQ_BROKER_URL=tcp://queue:61616 -e STORE_ENABLED=false -e WORKER_ENABLED=true  spring-boot-hpa3
+     $ docker run  -d --name "hpa-frontend" -p 32000:8080 -e ACTIVEMQ_BROKER_URL=tcp://queue:61616 -e STORE_ENABLED=true -- WORKER_ENABLED=false  spring-boot-hpa3
+``` 
+ 
+            
+  2. docker-compose
+  ```bash 
+  $ docker-compose up -d
+  ``` 
   3. k8s - (Deploy the application in Kubernetes ) 
   ```bash
   $ cd k8s 
@@ -192,6 +202,7 @@ kops delete cluster --name=useast1.k8s.appychip.vpc --yes
 ## Debugging
 ```sh
 remote dubugging listenning on docker port(8000)
+docer run -e "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=50505,server=y,suspend=y" spring-boot-hpa3
 docker-compose -f docker/debug/docker-compose.yml up
 docker logs <container_id>
 kubectl get events
