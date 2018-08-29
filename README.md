@@ -53,7 +53,7 @@ choose 1 of the 3 options: (prefer #3)
   2. docker-compose up
    ```bash
      $ docker-compose up -d
-       for run mode in deamon
+       for run mode  
      $ docker-compose -f docker/debug/docker-compose.yml up -d 
       for debug mode
   ``` 
