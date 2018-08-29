@@ -31,4 +31,8 @@ ENV WORKER_ENABLED=true
 
 #ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -jar /app.jar" ]
 
+#CMD ["java", \
+#    "-agentlib:jdwp=transport=dt_socket,address=50505,suspend=n,server=y", \
+#    "-jar", \
+#    "spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar"]
 

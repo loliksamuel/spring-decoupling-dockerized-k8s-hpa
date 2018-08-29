@@ -41,7 +41,8 @@ make images and package the application as a container
 choose 1 of the 3 options: (prefer #3)
   1. docker run 
    ```bash
-     $ docker container prune
+     $ docker container prune         kill all old     containers at once
+     $ docker kill $(docker ps -q)    kill all running containers at once
      $ docker run  -d --name "hpa-queue"    -p 61616:61616  webcenter/activemq:5.14.3
      $ docker run  -d --name "hpa-backend"  -p 31000:8080 -e ACTIVEMQ_BROKER_URL=tcp://queue:61616 -e STORE_ENABLED=false -e WORKER_ENABLED=true  spring-boot-hpa3
      $ docker run  -d --name "hpa-frontend" -p 32000:8080 -e ACTIVEMQ_BROKER_URL=tcp://queue:61616 -e STORE_ENABLED=true -e WORKER_ENABLED=false  spring-boot-hpa3
@@ -49,12 +50,14 @@ choose 1 of the 3 options: (prefer #3)
  
             
   2. docker-compose up
-  ```bash 
-  $ docker-compose up -d
-  or for debug mode
-  docker-compose -f docker/debug/docker-compose.yml up -d 
-  $ 
+   ```bash
+     $ docker-compose up -d
+       for run mode in deamon
+     $ docker-compose -f docker/debug/docker-compose.yml up -d 
+      for debug mode
   ``` 
+  
+  
   3. k8s - (Deploy the application in Kubernetes ) 
   ```bash
   $ cd k8s 
@@ -130,6 +133,7 @@ $ kubectl create -f ./grafana
 3. http://localhost:31000/metrics
 4. http://localhost:32000/metrics
 ### play in kubectl cluster
+0. minikube ip : get the ip
 1. http://192.168.99.100:30000   : kubernetes dashboard
 2. http://192.168.99.100:31000   : application backend
 3. http://192.168.99.100:32000   : application frontend
