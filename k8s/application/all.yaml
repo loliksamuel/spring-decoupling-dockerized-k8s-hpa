@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: spring-boot-hpa3
+        image: spring-boot-hpa3:v1
         imagePullPolicy: IfNotPresent
         env:
         - name: ACTIVEMQ_BROKER_URL
@@ -29,13 +29,13 @@ spec:
         command:
           - java
           - -jar
-          - /app.jar
-        livenessProbe:
-          initialDelaySeconds: 5
-          periodSeconds: 5
-          httpGet:
-            path: /health
-            port: 8080
+          - app.jar
+#        livenessProbe:
+#          initialDelaySeconds: 5
+#          periodSeconds: 5
+#          httpGet:
+#            path: /health
+#            port: 8080
 #            scheme: HTTP
         resources:
           limits:
@@ -69,7 +69,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: spring-boot-hpa3
+        image: spring-boot-hpa3:v1
         imagePullPolicy: IfNotPresent
         env:
         - name: ACTIVEMQ_BROKER_URL
@@ -83,13 +83,13 @@ spec:
         command:
           - java
           - -jar
-          - /app.jar
-        livenessProbe:
-          initialDelaySeconds: 30
-          periodSeconds: 5
-          httpGet:
-            path: /health
-            port: 8080
+          - app.jar
+#        livenessProbe:
+#          initialDelaySeconds: 30
+#          periodSeconds: 5
+#          httpGet:
+#            path: /health
+#            port: 8080
 #            scheme: HTTP
         resources:
           limits:

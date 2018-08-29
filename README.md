@@ -14,7 +14,8 @@ $ minikube start \
   --memory 8192 \
   --extra-config=controller-manager.horizontal-pod-autoscaler-upscale-delay=1m \
   --extra-config=controller-manager.horizontal-pod-autoscaler-downscale-delay=2m \
-  --extra-config=controller-manager.horizontal-pod-autoscaler-sync-period=10s
+  --extra-config=controller-manager.horizontal-pod-autoscaler-sync-period=10s \
+  --vm-driver="virtualbox" --insecure-registry=192.168.99.100:80
 You should start minikube with at least 4GB of RAM. If you're using a pre-existing minikube instance, you can resize the VM by destroying it an recreating it. Just adding the `--memory 4096` won't have any effect.
   
 
@@ -33,10 +34,10 @@ validate the cluster exists
 ## create application image
 ```bash
 $ docker   rmi    spring-boot-hpa3
-$ docker build -t spring-boot-hpa3 .
+$ docker build -t spring-boot-hpa3:v1 .
 make images and package the application as a container
 $ docker container prune -f  & docker kill $(docker ps -q) & docker ps &  kubectl delete namespace monitoring app 
-clean old ps, running ps and all k8s resources
+clean old ps, running ps and all k8s resource
 ```
 
 ## Deploying the application 

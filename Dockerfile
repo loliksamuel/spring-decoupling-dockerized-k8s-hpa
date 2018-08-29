@@ -11,7 +11,7 @@ FROM openjdk:10.0.1-10-jre-slim
 #FROM java:10
 #WORKDIR /app
 #VOLUME /tmp
-ADD target/spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar /app.jar
+ADD target/spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar app.jar
 #RUN sh -c 'touch /app.jar'
 ENV STORE_ENABLED=true
 ENV WORKER_ENABLED=true
@@ -36,3 +36,8 @@ ENV WORKER_ENABLED=true
 #    "-jar", \
 #    "spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar"]
 
+if no cmd
+then only docker-compose + remote debug works
+
+if cmd
+then docker run+kubectl works
