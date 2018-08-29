@@ -35,14 +35,15 @@ validate the cluster exists
 $ docker   rmi    spring-boot-hpa3
 $ docker build -t spring-boot-hpa3 .
 make images and package the application as a container
+$ docker container prune -f  & docker kill $(docker ps -q) & docker ps &  kubectl delete namespace monitoring app 
+clean old ps, running ps and all k8s resources
 ```
 
 ## Deploying the application 
 choose 1 of the 3 options: (prefer #3)
   1. docker run 
    ```bash
-     $ docker container prune         kill all old     containers at once
-     $ docker kill $(docker ps -q)    kill all running containers at once
+     
      $ docker run  -d --name "hpa-queue"    -p 61616:61616  webcenter/activemq:5.14.3
      $ docker run  -d --name "hpa-backend"  -p 31000:8080 -e ACTIVEMQ_BROKER_URL=tcp://queue:61616 -e STORE_ENABLED=false -e WORKER_ENABLED=true  spring-boot-hpa3
      $ docker run  -d --name "hpa-frontend" -p 32000:8080 -e ACTIVEMQ_BROKER_URL=tcp://queue:61616 -e STORE_ENABLED=true -e WORKER_ENABLED=false  spring-boot-hpa3
