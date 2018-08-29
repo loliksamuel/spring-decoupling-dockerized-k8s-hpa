@@ -41,6 +41,7 @@ make images and package the application as a container
 choose 1 of the 3 options: (prefer #3)
   1. docker run 
    ```bash
+     $ docker container prune
      $ docker run  -d --name "hpa-queue"    -p 61616:61616  webcenter/activemq:5.14.3
      $ docker run  -d --name "hpa-backend"  -p 31000:8080 -e ACTIVEMQ_BROKER_URL=tcp://queue:61616 -e STORE_ENABLED=false -e WORKER_ENABLED=true  spring-boot-hpa3
      $ docker run  -d --name "hpa-frontend" -p 32000:8080 -e ACTIVEMQ_BROKER_URL=tcp://queue:61616 -e STORE_ENABLED=true -e WORKER_ENABLED=false  spring-boot-hpa3
