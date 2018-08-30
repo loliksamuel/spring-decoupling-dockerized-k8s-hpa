@@ -15,18 +15,18 @@ spec:
     spec:
       containers:
       - name: backend
-        image: spring-boot-hpa3:v1
+        image: samuelcardonis/spring-boot-hpa3:v1
         imagePullPolicy: IfNotPresent
         env:
         - name: ACTIVEMQ_BROKER_URL
-          value: "tcp://queue:61616"
+          value: tcp://queue:61616
         - name: STORE_ENABLED
           value: "false"
         - name: WORKER_ENABLED
           value: "true"
         ports:
           - containerPort: 8080
-        command:
+        args:
           - java
           - -jar
           - app.jar
@@ -69,18 +69,18 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: spring-boot-hpa3:v1
+        image: samuelcardonis/spring-boot-hpa3:v1
         imagePullPolicy: IfNotPresent
         env:
         - name: ACTIVEMQ_BROKER_URL
-          value: "tcp://queue:61616"
+          value: tcp://queue:61616
         - name: STORE_ENABLED
           value: "true"
         - name: WORKER_ENABLED
           value: "false"
         ports:
           - containerPort: 8080
-        command:
+        args:
           - java
           - -jar
           - app.jar
@@ -122,8 +122,8 @@ spec:
         app: queue
     spec:
       containers:
-      - name: web
-        image: webcenter/activemq
+      - name: queue
+        image: webcenter/activemq:5.14.3
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 61616

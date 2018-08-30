@@ -36,8 +36,9 @@ validate the cluster exists
 $ docker   rmi    spring-boot-hpa3
 $ docker build -t spring-boot-hpa3:v1 .
 make images and package the application as a container
-$ docker container prune -f  & docker kill $(docker ps -q) & docker ps &  kubectl delete namespace monitoring app 
-clean old ps, running ps and all k8s resource
+$ kubectl delete namespace monitoring app  & docker container prune -f  & docker kill $(docker ps -q) & docker ps
+clean old ps, running ps and all k8s ps and k8s resource
+$ docker push $DOCKER_USER_ID/spring-boot-hpa3
 ```
 
 ## Deploying the application 
@@ -137,8 +138,8 @@ $ kubectl create -f ./grafana
 ### play in kubectl cluster
 0. minikube ip : get the ip
 1. http://192.168.99.100:30000   : kubernetes dashboard
-2. http://192.168.99.100:31000   : application backend
-3. http://192.168.99.100:32000   : application frontend
+2. http://192.168.99.100:31000   : application backend ( also can be called minikube service backend  --namespace=app)
+3. http://192.168.99.100:32000   : application frontend( also can be called minikube service frontend --namespace=app)
 4. http://192.168.99.100:31190   : prometheus monitoring
 5. http://192.168.99.100:30003   : grafana monitoring
 6. https://192.168.99.100:8443   : kubernetes-apiservers
@@ -223,6 +224,7 @@ docker logs <container_id>
 http://localhost:31000
 same do on frontend
 kubectl get events
+kubectl get svc --namespace app
 kubectl get pods --namespace app
 kubectl logs backend-dff7f9579-brhbd   --namespace app
 kubectl logs frontend-6f555ff497-22kp4 --namespace app
