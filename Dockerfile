@@ -13,8 +13,7 @@ FROM openjdk:10.0.1-10-jre-slim
 #VOLUME /tmp
 COPY target/spring-boot-k8s-hpa-0.0.3-SNAPSHOT.jar app.jar
 #RUN sh -c 'touch /app.jar'
-ENV STORE_ENABLED=true
-ENV WORKER_ENABLED=true
+
 
 
 
@@ -41,3 +40,5 @@ ENV WORKER_ENABLED=true
 #
 #if cmd
 #then docker run+kubectl works
+ENV STORE_ENABLED=true
+ENV WORKER_ENABLED=true
