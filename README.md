@@ -107,7 +107,7 @@ Deploy Prometheus v2 in the monitoring namespace
 $ kubectl create -f ./custom-metrics-api
  Deploy the Prometheus custom metrics API adapter:
 ```
-
+    
 ```bash
 $ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq .
  get List the custom metrics provided by Prometheus
