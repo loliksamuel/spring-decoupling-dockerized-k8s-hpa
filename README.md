@@ -4,7 +4,7 @@
 You should install `jq` — a lightweight and flexible command-line JSON processor.
 You can find more [info about `jq` on the official website](https://github.com/stedolan/jq).
 
-## prepare the cluster
+## prepare the cluster 
 ```bash
 $ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.28.2/minikube-darwin-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
 $ brew install kubernetes-cli 
@@ -54,9 +54,9 @@ choose 1 of the 3 options: (prefer #3)
   2. docker-compose up
    ```bash
      $ docker-compose up -d
-       for run mode  
+       run mode  
      $ docker-compose -f docker/debug/docker-compose.yml up -d 
-      for debug mode
+       debug mode
   ``` 
   
   
