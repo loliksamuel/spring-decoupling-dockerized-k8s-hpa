@@ -5,11 +5,10 @@ You should install `jq` — a lightweight and flexible command-line JSON process
 You can find more [info about `jq` on the official website](https://github.com/stedolan/jq).
 
 ## prepare the cluster
-You should have minikube installed.
-
-You should start minikube with at least 4GB of RAM:
-
 ```bash
+$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.28.2/minikube-darwin-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+$ brew install kubernetes-cli
+You should have minikube and kubernetes-cli installed.
 $ minikube start \
   --memory 8192 \
   --extra-config=controller-manager.horizontal-pod-autoscaler-upscale-delay=1m \
