@@ -6,7 +6,7 @@ You can find more [info about `jq` on the official website](https://github.com/s
 
 ## prepare the cluster 
 ```bash
-$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.28.2/minikube-darwin-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+$ brew cask install minikube
 $ brew install kubernetes-cli 
 $ brew install docker
 You should have minikube and kubernetes-cli installed.
@@ -36,7 +36,7 @@ validate the cluster exists
 $ docker   rmi    spring-boot-hpa3
 $ docker build -t spring-boot-hpa3:v1 .
 make images and package the application as a container
-$ kubectl delete namespace monitoring app  & docker container prune -f  & docker kill $(docker ps -q) & docker ps
+$ kubectl delete namespace monitoring app  && docker container prune -f  && docker kill $(docker ps -q) && docker ps
 clean old ps, running ps and all k8s ps and k8s resource
 $ docker push $DOCKER_USER_ID/spring-boot-hpa3
 ```
@@ -225,7 +225,7 @@ http://localhost:31000
 same do on frontend
 kubectl get events
 kubectl get svc --namespace app
-kubectl get pods --namespace app
+kubectl get pods --namespace app -o wide
 kubectl logs backend-dff7f9579-brhbd   --namespace app
 kubectl logs frontend-6f555ff497-22kp4 --namespace app
 ```
