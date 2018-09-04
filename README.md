@@ -36,7 +36,7 @@ validate the cluster exists
 $ docker   rmi    spring-boot-hpa3
 $ docker build -t spring-boot-hpa3:v1 .
 make images and package the application as a container
-$ kubectl delete namespace monitoring app  && docker container prune -f  && docker kill $(docker ps -q) && docker ps
+$ kubectl delete namespace monitoring app  && docker container prune -f  && docker kill $(docker ps -q)&& docker ps
 clean old ps, running ps and all k8s ps and k8s resource
 $ docker push $DOCKER_USER_ID/spring-boot-hpa3
 ```
@@ -55,9 +55,9 @@ choose 1 of the 3 options: (prefer #3)
   2. docker-compose up
    ```bash
      $ docker-compose up -d
-       run mode  
+       for run mode  
      $ docker-compose -f docker/debug/docker-compose.yml up -d 
-       debug mode
+      for debug mode
   ``` 
   
   
@@ -108,8 +108,8 @@ Deploy Prometheus v2 in the monitoring namespace
 $ kubectl create -f ./custom-metrics-api
  Deploy the Prometheus custom metrics API adapter:
 ```
-    
-```bashw
+
+```bash
 $ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq .
  get List the custom metrics provided by Prometheus
 ```
@@ -226,6 +226,5 @@ same do on frontend
 kubectl get events
 kubectl get svc --namespace app
 kubectl get pods --namespace app -o wide
-kubectl logs backend-dff7f9579-brhbd   --namespace app
-kubectl logs frontend-6f555ff497-22kp4 --namespace app
+kubectl logs <pod_id> --namespace app
 ```
