@@ -6,7 +6,7 @@ You can find more [info about `jq` on the official website](https://github.com/s
 
 ## prepare the cluster 
 ```bash
-$ brew cask install minikube
+$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.28.2/minikube-darwin-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
 $ brew install kubernetes-cli 
 $ brew install docker
 You should have minikube and kubernetes-cli installed.
@@ -150,10 +150,15 @@ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*
 ```
 
 ##  scale the application 
-You can scale the application (backend workers) in proportion to the number of messages in the queue with the Horizontal Pod Autoscaler. You can deploy the HPA with:
 
 ```bash
-kubectl create -f application/hpa.yaml
+$ kubectl scale deployment backend --replicas=5
+You can scale the backend application manually  
+
+$ kubectl create -f application/hpa.yaml
+You can scale the backend application automaticlly in proportion to the number of messages in the queue 
+with the Horizontal Pod Autoscaler (HPA). 
+
 ```
 
 You can send more traffic to the application with:
