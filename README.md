@@ -224,7 +224,7 @@ docker run  -e "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=*:50505,ser
             -p 31000:8080  \ 
              spring-boot-hpa3-debug
 docker-compose -f docker/debug/docker-compose.yml up\
-docker exec -it <container_id> bash
+docker exec -it --user root <container_id> bash 
 docker logs <container_id>
 http://localhost:31000
 same do on frontend
