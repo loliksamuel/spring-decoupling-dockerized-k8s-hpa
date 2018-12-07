@@ -49,10 +49,10 @@ $ docker push $DOCKER_USER_ID/spring-boot-hpa3
 choose 1 of the 3 options: (prefer #3)
   1. docker run 
    ```bash
-     
-     $ docker run  -d --name "hpa-queue"    -p 61616:61616  webcenter/activemq:5.14.3
-     $ docker run  -d --name "hpa-backend"  -p 31000:8080 -e ACTIVEMQ_BROKER_URL=tcp://queue:61616 -e STORE_ENABLED=false -e WORKER_ENABLED=true  spring-boot-hpa3
-     $ docker run  -d --name "hpa-frontend" -p 32000:8080 -e ACTIVEMQ_BROKER_URL=tcp://queue:61616 -e STORE_ENABLED=true -e WORKER_ENABLED=false  spring-boot-hpa3
+  
+     $ docker run  -d --name "hpa-queue"    --cpu-quota=30000 -p 61616:61616  webcenter/activemq:5.14.3
+     $ docker run  -d --name "hpa-backend"  --cpu-quota=30000 -p 31000:8080 -e ACTIVEMQ_BROKER_URL=tcp://queue:61616 -e STORE_ENABLED=false -e WORKER_ENABLED=true  spring-boot-hpa3
+     $ docker run  -d --name "hpa-frontend" --cpu-quota=30000 -p 32000:8080 -e ACTIVEMQ_BROKER_URL=tcp://queue:61616 -e STORE_ENABLED=true -e WORKER_ENABLED=false  spring-boot-hpa3
 ``` 
  
             
