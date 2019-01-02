@@ -7,7 +7,7 @@ You can find more [info about `jq` on the official website](https://github.com/s
 ## prepare the cluster 
 ```bash
 $ brew update
-$ brew install kubernetes-cli kubernetes-helm
+$ brew install kubernetes-cli kubernetes-helm stern kubectx
 $ brew cask install minikube
 $ brew upgrade kubernetes-cli kubernetes-helm
 $ brew cask upgrade minikube
