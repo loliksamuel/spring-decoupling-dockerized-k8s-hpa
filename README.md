@@ -236,6 +236,8 @@ kubectl get events
 kubectl get svc --namespace app
 kubectl get pods --namespace app -o wide
 kubectl logs <pod_id> --namespace app
+kubectl describe
+kubectl exec -t
 see Kubectl Commands Cheat Sheet
 Note: Minikube can only expose Services through NodePort. The EXTERNAL-IP is always pending.
 
